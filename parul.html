@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mess Card</title>
+    <!-- Use FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="parul.css">
+</head>
+<body>
+
+    <div class="card">
+        <div class="card-header">
+            <i class="fa-solid fa-utensils"></i>
+            ABRAHAM LINCOLN MESS
+        </div>
+        
+        <div class="card-body">
+            <div class="photo-container">
+                <img id="display-photo" src="https://via.placeholder.com/140x180?text=Photo" alt="Student Photo">
+            </div>
+            
+            <div class="details-container">
+                <h2 id="display-name" class="student-name">PAGARE MANAD KAILAS</h2>
+                
+                <div class="detail-row">
+                    <span class="detail-icon"><i class="fa-solid fa-list-ul"></i></span>
+                    <span class="detail-label">Enrollment No.</span>
+                    <span id="display-enrollment" class="detail-value">2503031590027</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-icon"><i class="fa-regular fa-building"></i></span>
+                    <span class="detail-label">Hostel</span>
+                    <span class="detail-value">ABRAHAM LINCOLN - A</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-icon"><i class="fa-solid fa-phone"></i></span>
+                    <span class="detail-label">Contact No.</span>
+                    <span id="display-mobile" class="detail-value">9309773583</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                    <span class="detail-label">Institute</span>
+                    <span class="detail-value">PIET-1</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-icon"><i class="fa-regular fa-calendar"></i></span>
+                    <span class="detail-label">Validity</span>
+                    <span class="detail-value validity-value">01-07-2026 to 30-06-2027</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <div class="separator-container">
+                <div class="separator-circle circle-left"></div>
+                <div class="separator-line"></div>
+                <div class="separator-circle circle-right"></div>
+            </div>
+            
+            <div class="date-display" id="current-date">06-07-2026</div>
+            <div class="time-display" id="current-time">12:43:12 PM</div>
+        </div>
+    </div>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            document.getElementById('current-date').textContent = `${day}-${month}-${year}`;
+            
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            const formattedHours = String(hours).padStart(2, '0');
+            
+            document.getElementById('current-time').textContent = `${formattedHours}:${minutes}:${seconds} ${ampm}`;
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const name = localStorage.getItem('studentName');
+            const mobile = localStorage.getItem('studentMobile');
+            const enrollment = localStorage.getItem('studentEnrollment');
+            const photo = localStorage.getItem('studentPhoto');
+
+            if (name) document.getElementById('display-name').textContent = name.toUpperCase();
+            if (mobile) document.getElementById('display-mobile').textContent = mobile;
+            if (enrollment) document.getElementById('display-enrollment').textContent = enrollment;
+            if (photo) document.getElementById('display-photo').src = photo;
+        });
+    </script>
+</body>
+</html>
