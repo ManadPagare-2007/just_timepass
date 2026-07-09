@@ -8,13 +8,40 @@
 </head>
 <body>
     <div class="form">
-        <form onsubmit="card()">
-            <input type="text" id="name" name="name" class="input" placeholder=" Name"><br>
-            <input type="name" id="mobile" name="mobile" class="input" placeholder=" Mobile"><br>
-            <input type="name" id="enrollment" name="enrollment" class="input" placeholder=" Enrollment"><br>
-            <input type="file" accept="image/*" class="input" placeholder="Photo"><br><br><br>
+        <form id="detailsForm">
+            <input type="text" id="name" name="name" class="input" placeholder=" Name" required><br>
+            <input type="text" id="mobile" name="mobile" class="input" placeholder=" Mobile" required><br>
+            <input type="text" id="enrollment" name="enrollment" class="input" placeholder=" Enrollment" required><br>
+            <input type="file" id="photo" accept="image/*" class="input" placeholder="Photo"><br><br><br>
             <button style="width: 70px;height: 30px;border-radius: 10px; " type="submit">Submit</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById('detailsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const mobile = document.getElementById('mobile').value;
+            const enrollment = document.getElementById('enrollment').value;
+            const photoFile = document.getElementById('photo').files[0];
+
+            localStorage.setItem('studentName', name);
+            localStorage.setItem('studentMobile', mobile);
+            localStorage.setItem('studentEnrollment', enrollment);
+
+            if (photoFile) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    localStorage.setItem('studentPhoto', event.target.result);
+                    window.location.href = 'parul.html';
+                };
+                reader.readAsDataURL(photoFile);
+            } else {
+                localStorage.removeItem('studentPhoto');
+                window.location.href = 'parul.html';
+            }
+        });
+    </script>
 </body>
 </html>
